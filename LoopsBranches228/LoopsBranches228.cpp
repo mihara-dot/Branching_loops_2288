@@ -10,40 +10,41 @@
 using namespace std;
 
 int main() {
-  double movementSpeed, fluidViscosity, pipeDiameter, thermalDiffusivity, reynoldsNumber, pecletNumber, pipeLength, dimensionlessDiameter, pecletProduct, nusseltNumber;
+  double w, viscosity, d, alpha, Re, Pe, l, D, pecletProduct, Nu;
+  int lengthCount = 5;
 
   cout << "Movement speed (cm/s) = ";
-  cin >> movementSpeed;
+  cin >> w;
 
   cout << "Fluid viscosity (cm^2/s) = ";
-  cin >> fluidViscosity;
+  cin >> viscosity;
 
   cout << "Pipe diameter (cm) = ";
-  cin >> pipeDiameter;
+  cin >> d;
 
   cout << "Thermal diffusivity (cm^2/s) = ";
-  cin >> thermalDiffusivity;
+  cin >> alpha;
 
-  reynoldsNumber = movementSpeed * pipeDiameter / fluidViscosity;
-  pecletNumber = movementSpeed * pipeDiameter / thermalDiffusivity;
+  Re = w * d / viscosity;
+  Pe = w * d / alpha;
 
-  for (int lengthIndex = 0; lengthIndex < 5; ++lengthIndex) {
+  for (int lengthIndex = 0; lengthIndex < lengthCount; ++lengthIndex) {
     cout << "Enter pipe length in meters (5, 10, 20, 50, 100): ";
-    cin >> pipeLength;
+    cin >> l;
 
-    pipeLength = pipeLength * 100.0;
+    l = l * 100.0;
 
-    dimensionlessDiameter = pipeDiameter / pipeLength;
-    pecletProduct = pecletNumber * dimensionlessDiameter;
+    D = d / l;
+    pecletProduct = Pe * D;
 
     if (pecletProduct > 12.0) {
-      nusseltNumber = 1.61 * pow(reynoldsNumber * dimensionlessDiameter, 0.33);
+      Nu = 1.61 * pow(Re * D, 0.33);
     } else {
-      nusseltNumber = 3.66;
+      Nu = 3.66;
     }
 
     cout << "Pe * D = " << pecletProduct << ", "
-         << "Nu = " << nusseltNumber << endl;
+         << "Nu = " << Nu << endl;
   }
 
   return 0;
